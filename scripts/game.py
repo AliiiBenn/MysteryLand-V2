@@ -9,7 +9,7 @@ class Game:
         self.clock = py.time.Clock()
         self.entities = py.sprite.Group()
         
-        self.player = Player(100, 100, "assets/player.png")
+        self.player = Player(100, 100, "assets/player.png", 5)
         self.entities.add(self.player)
         
         
