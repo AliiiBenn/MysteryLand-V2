@@ -1,11 +1,16 @@
 import pygame as py
 
+from entities import Player
 
 
 class Game:
     def __init__(self):
         self.screen = py.display.set_mode((800, 600))
         self.clock = py.time.Clock()
+        self.entities = py.sprite.Group()
+        
+        self.player = Player(100, 100)
+        self.entities.add(self.player)
         
         
     def set_background(self) -> None:
@@ -18,6 +23,10 @@ class Game:
             self.clock.tick(60)
             
             self.set_background()
+            
+            for entity in self.entities:
+                entity.update(self.screen)
+            
             
             py.display.flip()
             
