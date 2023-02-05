@@ -1,0 +1,4 @@
+
+
+class ImageNotFoundForEntityError(Exception):
+    pass

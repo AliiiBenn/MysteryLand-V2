@@ -1,6 +1,19 @@
 import pygame as py
 
 from entities import Player
+from maps.maps import MapManager
+
+
+def create_player(x : int, y : int, image_path : str, speed : int, group : py.sprite.Group) -> Player:
+    player = Player(x, y, image_path, speed)
+    group.add(player)
+    return player
+
+
+def add_new_entity(x : int, y : int, image_path : str, speed : int, entity_type ,group : py.sprite.Group) -> Player:
+    entity = entity_type(x, y, image_path, speed)
+    group.add(entity)
+    return entity
 
 
 class Game:
@@ -9,8 +22,15 @@ class Game:
         self.clock = py.time.Clock()
         self.entities = py.sprite.Group()
         
-        self.player = Player(100, 100, "assets/player.png", 5)
-        self.entities.add(self.player)
+        self.player = create_player(400, 300, "assets/player.png", 5, self.entities)
+        
+        self.map_manager = MapManager(self.screen, self.player)
+        
+    
+    def update(self) -> None:
+        self.set_background()
+        self.map_manager.update()    
+        self.map_manager.draw()
         
         
     def set_background(self) -> None:
@@ -22,10 +42,8 @@ class Game:
         while running:
             self.clock.tick(60)
             
-            self.set_background()
             
-            for entity in self.entities:
-                entity.update(self.screen)
+            self.update()
             
             
             py.display.flip()
